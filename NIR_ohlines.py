@@ -1,7 +1,9 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.ticker import AutoMinorLocator
-# %matplotlib inline
 
 ##### Begin: User input #####
 
@@ -16,8 +18,6 @@ tellurics_file = "atran0.85-2.4.dat"
 skylines_file = "rousselot2000.txt"
 
 ##### End: User input #####
-
-
 dw=dw*(CW/2.4)
 # Read the data files
 tellurics = pd.read_table(tellurics_file, delim_whitespace=True, 
@@ -29,8 +29,10 @@ skylines = pd.read_table(skylines_file, delim_whitespace=True,
 lowlim=CW-dw/2.     #calclate lower limit
 uplim=CW+dw/2.      #calclate upper limit
 
+# To set the tics on both axes
+plt.style.use('classic')
 # Set aspec ratio
-plt.axes().set_aspect(aspect=0.07)
+plt.axes().set_aspect(aspect=0.06)
 # Set mnor tics
 mxtics = AutoMinorLocator(5)
 mytics = AutoMinorLocator(5)
@@ -65,6 +67,7 @@ for k in SX:
 
 # Indicate the location of the emission line
 em_line_loc=(1+z)*1e-4*em_line[1]
+print("Ha = "+format(em_line_loc)+" um")
 plt.vlines(em_line_loc,0,1.05, color='black', linestyle='--', linewidth=1.05, alpha=1,zorder=5)
 plt.annotate(em_line[0],xy=(em_line_loc,1.05),xytext=(.999*em_line_loc,1.06))
 
@@ -77,5 +80,5 @@ plt.tight_layout()
 
 print("LUCI N3.75, G210, K-filter\nA target at z= "+str(z)+" has Halpa line at "+format(em_line_loc)+" um")
 
-plt.savefig('NIR_ohlines.pdf')
+plt.savefig('NIR_ohlines.png', bbox_inches='tight')
 plt.show()
