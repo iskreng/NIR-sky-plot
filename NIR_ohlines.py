@@ -65,7 +65,6 @@ for k in SX:
 
 # Indicate the location of the emission line
 em_line_loc=(1+z)*1e-4*em_line[1]
-print("Ha = "+format(em_line_loc)+" um")
 plt.vlines(em_line_loc,0,1.05, color='black', linestyle='--', linewidth=1.05, alpha=1,zorder=5)
 plt.annotate(em_line[0],xy=(em_line_loc,1.05),xytext=(.999*em_line_loc,1.06))
 
@@ -75,5 +74,6 @@ plt.annotate(cw_setup,xy=(lowlim+.002,1.15),xytext=(lowlim+.002,1.15),fontsize=7
 plt.legend(loc=1,fontsize=7,ncol=2,columnspacing=.5,markerscale=0.15,framealpha=0)
 
 plt.tight_layout()
-plt.savefig('NIR_ohlines.png')
+plt.savefig('NIR_ohlines.pdf')
 plt.show()
+print("Ha = "+format(em_line_loc)+" um")
