@@ -14,11 +14,15 @@ z=2.2      # Object redshift
 em_line=[r'$H_{\alpha}$', 6564.0] # Emission line to indicate
 
 # Set the files
-tellurics_file = "atran0.85-2.4.dat"
-skylines_file = "rousselot2000.txt"
+# Prompt for new files if they need to be different ones
+tellurics_file = input("Enter telluric line file [default: atran0.85-2.4.dat] : ") or str("atran0.85-2.4.dat")
+skylines_file = input("Enter sky emission lines file [default: rousselot2000.txt] : ") or str("rousselot2000.txt")
+
 
 ##### End: User input #####
+
 dw=dw*(CW/2.4)
+
 # Read the data files
 tellurics = pd.read_table(tellurics_file, delim_whitespace=True, 
                           header=None, names=['t_lam','t_flx'])
