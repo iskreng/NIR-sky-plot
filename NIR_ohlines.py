@@ -76,4 +76,4 @@ plt.legend(loc=1,fontsize=7,ncol=2,columnspacing=.5,markerscale=0.15,framealpha=
 plt.tight_layout()
 plt.savefig('NIR_ohlines.pdf')
 plt.show()
-print("Ha = "+format(em_line_loc)+" um")
+print("LUCI N3.75, G210\n For a target at z= "+str(z)+" has Halpa at "+format(em_line_loc)+" um")
