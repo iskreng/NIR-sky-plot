@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.ticker import AutoMinorLocator
@@ -14,8 +11,8 @@ z=2.2      # Object redshift
 em_line=[r'$H_{\alpha}$', 6564.0] # Emission line to indicate
 
 # Set the files
-tellurics_file = "/Users/iskren/Work/Catalogs/Line_lists/atran0.85-2.4.dat"
-skylines_file = "/Users/iskren/Work/Catalogs/Line_lists/rousselot2000.txt"
+tellurics_file = "atran0.85-2.4.dat"
+skylines_file = "rousselot2000.txt"
 
 ##### End: User input #####
 dw=dw*(CW/2.4)
