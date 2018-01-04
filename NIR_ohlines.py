@@ -75,5 +75,5 @@ plt.annotate(cw_setup,xy=(lowlim+.002,1.15),xytext=(lowlim+.002,1.15),fontsize=7
 plt.legend(loc=1,fontsize=7,ncol=2,columnspacing=.5,markerscale=0.15,framealpha=0)
 
 plt.tight_layout()
-plt.savefig('NIR_ohlines.pdf', format="pdf")
+plt.savefig('NIR_ohlines.png')
 plt.show()
