@@ -31,6 +31,7 @@ uplim=CW+dw/2.      #calclate upper limit
 
 # To set the tics on both axes
 plt.style.use('classic')
+plt.figure(facecolor='white')
 # Set aspec ratio
 plt.axes().set_aspect(aspect=0.06)
 # Set mnor tics
