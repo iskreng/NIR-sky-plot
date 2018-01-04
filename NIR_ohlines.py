@@ -72,14 +72,14 @@ print("Ha = "+format(em_line_loc)+" um")
 plt.vlines(em_line_loc,0,1.05, color='black', linestyle='--', linewidth=1.05, alpha=1,zorder=5)
 plt.annotate(em_line[0],xy=(em_line_loc,1.05),xytext=(.999*em_line_loc,1.06))
 
-cw_setup="CW = "+str(CW)+"$\mu$m ({:.3f}".format(lowlim)+" - {:.3f}".format(uplim)+")" #; print(cw_setup)
+cw_setup="CW = "+str(CW)+"$\mu$m ({:.3f}".format(lowlim)+" - {:.3f}".format(uplim)+")"+"N3.75, G210, K-filter"
 plt.annotate(cw_setup,xy=(lowlim+.002,1.15),xytext=(lowlim+.002,1.15),fontsize=7)
 
 plt.legend(loc=1,fontsize=7,ncol=2,columnspacing=.5,markerscale=0.15,framealpha=0)
 
 plt.tight_layout()
 
-print("LUCI N3.75, G210, K-filter\nA target at z= "+str(z)+" has Halpa line at "+format(em_line_loc)+" um")
+print("Target at z= "+str(z)+" has Halpa line at "+format(em_line_loc)+" um")
 
 plt.savefig('NIR_ohlines.png', bbox_inches='tight')
 plt.show()
