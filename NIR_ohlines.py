@@ -1,8 +1,7 @@
-# 
-
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.ticker import AutoMinorLocator
+%matplotlib inline
 
 ##### Begin: User input #####
 
@@ -17,6 +16,8 @@ tellurics_file = "atran0.85-2.4.dat"
 skylines_file = "rousselot2000.txt"
 
 ##### End: User input #####
+
+
 dw=dw*(CW/2.4)
 # Read the data files
 tellurics = pd.read_table(tellurics_file, delim_whitespace=True, 
