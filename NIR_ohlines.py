@@ -74,6 +74,8 @@ plt.annotate(cw_setup,xy=(lowlim+.002,1.15),xytext=(lowlim+.002,1.15),fontsize=7
 plt.legend(loc=1,fontsize=7,ncol=2,columnspacing=.5,markerscale=0.15,framealpha=0)
 
 plt.tight_layout()
+
+print("LUCI N3.75, G210, K-filter\nA target at z= "+str(z)+" has Halpa line at "+format(em_line_loc)+" um")
+
 plt.savefig('NIR_ohlines.pdf')
 plt.show()
-print("LUCI N3.75, G210\n For a target at z= "+str(z)+" has Halpa at "+format(em_line_loc)+" um")
