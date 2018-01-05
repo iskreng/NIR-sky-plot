@@ -50,7 +50,7 @@ plt.axes().tick_params(which='minor', axis='both', direction='in')
 plt.xlim(lowlim,uplim); plt.xticks(fontsize=10)
 plt.ylim(0,1.2); plt.yticks(fontsize=10)
 plt.xlabel('Wavelength [$\mu$m]', fontsize=12)
-plt.ylabel('Flux [%]', fontsize=12)
+plt.ylabel('Flux [fractional]', fontsize=12)
 
 #Trim the data
 SX=skylines['s_lam'][(skylines['s_lam']>=lowlim*1e4) & (skylines['s_lam']<=uplim*1e4)]
