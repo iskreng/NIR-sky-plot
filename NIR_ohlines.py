@@ -64,7 +64,7 @@ plt.vlines(SX*1e-4,0,SY/symax, color='red', linestyle='-', linewidth=0.5,
            label='Sky emission lines', alpha=1,zorder=4)
 
 for k in SX:
-    lab='{:8.2f}'.format(k) ;print(lab)
+    lab='{:8.2f}'.format(k) #;print(lab)
     y_val=float(skylines['s_flx'][(skylines['s_lam']==k)])
     if y_val/symax >= .19 :
         plt.annotate(lab,xy=(k*1e-4,y_val/symax),xytext=(.998*k*1e-4,y_val/symax),
