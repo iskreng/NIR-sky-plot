@@ -7,9 +7,9 @@ warnings.filterwarnings('ignore')
 
 ##### Begin: User input #####
 
-CW=input("Central wavelength in um [default: 2.1]: ") or float(2.1); CW=float(CW)    # Central Wavelengt in micron
+CW=input("Enter central wavelength in um [default: 2.1]: ") or float(2.1); CW=float(CW)    # Central Wavelengt in micron
 
-z=input("Target redshift [default: 2.2]: ") or float(2.2); z=float(z)      # Object redshift
+z=input("Enter target redshift [default: 2.2]: ") or float(2.2); z=float(z)      # Object redshift
 em_line=[r'$H_{\alpha}$', 6564.0] # Emission line to indicate
 
 # Set the files
