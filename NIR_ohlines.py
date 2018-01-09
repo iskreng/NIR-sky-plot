@@ -1,4 +1,3 @@
-
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.ticker import AutoMinorLocator
@@ -21,9 +20,6 @@ em_line=pd.DataFrame({'line': [r'$H_{\alpha}$', r'$H_{\beta}$', r'OIII'],
 #skylines_file = input("Enter sky emission lines file [default: rousselot2000.txt] : ") or str("rousselot2000.txt")
 tellurics_file = "atran0.85-2.4.dat"
 skylines_file = "rousselot2000.txt"
-template_file="ukf6v.dat"
-template_file="ukg5iv.dat"
-template_file="ukk4v.dat"
 template_in=input("Enter choice a (A3, F3, G2, K3) of reference template (lgg=3.4, Fe/H=0.0) spectrum [default: G2]: ") or str("G2")
 template_file="NLTE_mod/"+str(template_in)+"_L"
 
@@ -79,15 +75,9 @@ plt.plot(TSX*(1+z)*1e-4,.5*TSY/tsymax, color='magenta', linestyle='-',
 plt.vlines(SX*1e-4,0,SY/symax, color='red', linestyle='-', linewidth=0.5, 
            label='Sky emission lines', alpha=1,zorder=4)
 
-<<<<<<< HEAD
 for k, y_val in zip(SX, SY):
     lab='{:.2f}'.format(k) #;print(lab)
     # y_val=float(skylines['s_flx'][(skylines['s_lam']==k)])
-=======
-for k in SX:
-    lab='{:8.2f}'.format(k) #;print(lab)
-    y_val=float(skylines['s_flx'][(skylines['s_lam']==k)])
->>>>>>> 7b57c5a081e02f134915e0f8506275186f127205
     if y_val/symax >= .19 :
         plt.annotate(lab,xy=(k*1e-4,y_val/symax),xytext=(.998*k*1e-4,y_val/symax),
                      fontsize=9)
@@ -99,11 +89,7 @@ plt.vlines(x_em_line,0,1.05, color='black', linestyle='--', linewidth=1.05, alph
 for em_line_loc, em_line_lable in zip(x_em_line,y_em_line):
     plt.annotate(em_line_lable,xy=(em_line_loc,1.05),xytext=(.999*em_line_loc,1.06))
 
-<<<<<<< HEAD
 cw_setup="CW = "+str(CW)+"$\mu$m ({:.3f}".format(lowlim)+" - {:.3f}".format(uplim)+")"+"; N3.75, G210"
-=======
-cw_setup="CW = "+str(CW)+"$\mu$m ({:5.3f}".format(lowlim)+" - {:5.3f}".format(uplim)+")"+"; N3.75, G210"
->>>>>>> 7b57c5a081e02f134915e0f8506275186f127205
 plt.annotate(cw_setup,xy=(lowlim+.002,1.15),xytext=(lowlim+.002,1.15),fontsize=10)
 
 plt.legend(loc=1,fontsize=10,ncol=2,columnspacing=.5,markerscale=0.28,framealpha=0)
