@@ -71,7 +71,7 @@ tsymax=TSY.max()
 plt.plot(TX,TY, color='lightgray', linestyle='-', 
          label='Telluric model, R=10 000', linewidth=0.75, alpha=1)
 plt.plot(TSX*(1+z)*1e-4,.5*TSY/tsymax, color='magenta', linestyle='-', 
-         label=template_in+' template', linewidth=0.75, alpha=1)
+         label=template_in+', R=10 000 NLTE model', linewidth=0.75, alpha=1)
 plt.vlines(SX*1e-4,0,SY/symax, color='red', linestyle='-', linewidth=0.5, 
            label='Sky emission lines', alpha=1,zorder=4)
 
