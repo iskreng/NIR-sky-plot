@@ -11,8 +11,8 @@ CW=input("Enter central wavelength in um [default: 2.1]: ") or float(2.1); CW=fl
 z=input("Enter target redshift [default: 2.2]: ") or float(2.2); z=float(z)      # Object redshift
 
 # Emission line to indicate
-em_line=pd.DataFrame({'line': [r'$H_{\alpha}$', r'$H_{\beta}$', r'OIII'],
-                      'wavelength': [6564.0, 4862., 5007.] })
+em_line=pd.DataFrame({'line': [r'$H_{\alpha}$', r'$H_{\beta}$', r'$H_{\gamma}$', r'$H_{\delta}$', r'OII', r'OIII', r'NII', r'NII'],
+                      'wavelength': [6562.8433, 4861.2786, 4340.462, 4101.74, 3727., 5007., 6549.8, 6585.3] })
 
 # Set the files
 # Prompt for new files if they need to be different ones
@@ -22,6 +22,7 @@ tellurics_file = "atran0.85-2.4.dat"
 skylines_file = "rousselot2000.txt"
 template_in=input("Enter choice a (A3, F3, G2, K3) of reference template (lgg=3.4, Fe/H=0.0) spectrum [default: G2]: ") or str("G2")
 template_file="NLTE_mod/"+str(template_in)+"_L"
+template_lines="NLTE_mod/"+str(template_in)+"_use_lines"
 
 ##### End: User input #####
 
@@ -85,7 +86,7 @@ for k, y_val in zip(SX, SY):
 # Indicate the location of the emission line
 x_em_line=(1+z)*1e-4*em_line['wavelength'][((1+z)*em_line['wavelength']>=lowlim*1e4) & ((1+z)*em_line['wavelength']<=uplim*1e4)]
 y_em_line=em_line['line'][((1+z)*em_line['wavelength']>=lowlim*1e4) & ((1+z)*em_line['wavelength']<=uplim*1e4)]
-plt.vlines(x_em_line,0,1.05, color='black', linestyle='--', linewidth=1.05, alpha=1,zorder=5)
+plt.vlines(x_em_line,0,1.05, color='black', linestyle='--', linewidth=1.05, alpha=1,zorder=5, label="Emission lines")
 for em_line_loc, em_line_lable in zip(x_em_line,y_em_line):
     plt.annotate(em_line_lable,xy=(em_line_loc,1.05),xytext=(.999*em_line_loc,1.06))
 
@@ -96,7 +97,7 @@ plt.legend(loc=1,fontsize=10,ncol=2,columnspacing=.5,markerscale=0.28,framealpha
 
 plt.tight_layout()
 
-print("\nFor a target at z= "+str(z)+" :")
+print("\nFew emission lines for z= "+str(z)+" :")
 shifted=em_line['wavelength'] * (1+z)*1e-4
 em_line.insert(2,'z-shifted',shifted)
 print(em_line)
