@@ -21,7 +21,7 @@ em_line=pd.DataFrame({'line': [r'$H_{\alpha}$', r'$H_{\beta}$', r'$H_{\gamma}$',
 tellurics_file = "atran0.85-2.4.dat"
 skylines_file = "rousselot2000.txt"
 template_in=input("Enter choice a (A3, F3, G2, K3) of reference template (lgg=3.4, Fe/H=0.0) spectrum [default: G2]: ") or str("G2")
-template_file="NLTE_mod/"+str(template_in)+"_L"
+template_file="NLTE_mod/"+str(template_in)+"_L.gz"
 template_lines="NLTE_mod/"+str(template_in)+"_use_lines"
 
 ##### End: User input #####
