@@ -11,7 +11,7 @@ CW=input("Enter central wavelength in um [default: 2.1]: ") or float(2.1); CW=fl
 z=input("Enter target redshift [default: 2.2]: ") or float(2.2); z=float(z)      # Object redshift
 
 # Emission line to indicate
-em_line=pd.DataFrame({'line': [r'$H_{\alpha}$', r'$H_{\beta}$', r'$H_{\gamma}$', r'$H_{\delta}$', r'OII', r'OIII', r'NII', r'NII', r'$Ly_{\alpha}$', r'$Ly_{\beta}$', r'C{\sc IV}', r'MG{\sc II}'],
+em_line=pd.DataFrame({'line': [r'$H_{\alpha}$', r'$H_{\beta}$', r'$H_{\gamma}$', r'$H_{\delta}$', r'OII', r'OIII', r'NII', r'NII', r'$Ly_{\alpha}$', r'$Ly_{\beta}$', r'C${\ IV}$', r'$Mg{\ II}$'],
                       'wavelength': [6562.8433, 4861.2786, 4340.462, 4101.74, 3727., 5007., 6549.8, 6585.3,1215.67,1025.72,1549.06,2798.75] })
 
 # Set the files
