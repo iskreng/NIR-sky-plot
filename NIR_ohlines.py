@@ -40,7 +40,7 @@ tellurics = pd.read_table(tellurics_file, delim_whitespace=True, engine='c',
                           header=None, names=['t_lam','t_flx'], usecols=[0,1])
 
 skylines = pd.read_table(skylines_file, delim_whitespace=True, engine='c', 
-                          header=None, names=['s_lam','s_flx'], skiprows=28, usecols=[0,1])
+                          header=None, names=['s_lam','s_flx'], comment='#', usecols=[0,1])
 
 if str(template_in) != 'QSO':
     template_spec = pd.read_table(template_file, delim_whitespace=True, engine='c', 
@@ -59,6 +59,7 @@ uplim=CW+dw/2.      #calclate upper limit
 # Format the plot
 plt.style.use('classic')
 plt.figure(facecolor='white', figsize=plt.figaspect(0.5))
+plt.axes().ticklabel_format(useOffset=False)
 # Set mnor tics
 mxtics = AutoMinorLocator(10)
 mytics = AutoMinorLocator(4)
