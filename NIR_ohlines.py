@@ -59,7 +59,7 @@ uplim=CW+dw/2.      #calclate upper limit
 # Format the plot
 plt.style.use('classic')
 plt.figure(facecolor='white', figsize=plt.figaspect(0.5))
-plt.axes().ticklabel_format(useOffset=False)
+plt.rcParams["font.family"] = "serif"; plt.axes().ticklabel_format(useOffset=False)
 # Set mnor tics
 mxtics = AutoMinorLocator(10)
 mytics = AutoMinorLocator(4)
