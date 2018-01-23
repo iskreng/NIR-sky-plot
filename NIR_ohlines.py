@@ -1,3 +1,4 @@
+import argparse
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.ticker import AutoMinorLocator
@@ -34,6 +35,11 @@ if indicate_lines==1:
 
 dw=0.155    # Full wavelength range at 2.4um. It will be rescaled below depending on CW
 dw=dw*(CW/2.4)
+parser = argparse.ArgumentParser()
+parser.add_argument("--dw",type=float)
+input=parser.parse_args()
+if input.dw :
+    dw=input.dw
 
 # Read the data files
 tellurics = pd.read_table(tellurics_file, delim_whitespace=True, engine='c', 
