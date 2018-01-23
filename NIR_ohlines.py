@@ -36,7 +36,11 @@ if indicate_lines==1:
 dw=0.155    # Full wavelength range at 2.4um. It will be rescaled below depending on CW
 dw=dw*(CW/2.4)
 parser = argparse.ArgumentParser()
-parser.add_argument("--dw",type=float)
+
+def evalcmlarg(text):
+    return eval(text)
+
+parser.add_argument("--dw",type=evalcmlarg)
 input=parser.parse_args()
 if input.dw :
     dw=input.dw
@@ -131,7 +135,11 @@ plt.vlines(x_em_line,0,1.05, color='black', linestyle='--', linewidth=1.05, alph
 for em_line_loc, em_line_lable in zip(x_em_line,y_em_line):
     plt.annotate(em_line_lable,xy=(em_line_loc,1.05),xytext=(.999*em_line_loc,1.06))
 
-cw_setup="CW = "+str(CW)+"$\mu$m ({:.3f}".format(lowlim)+" - {:.3f}".format(uplim)+")"+"; N3.75, G210"
+if input.dw :
+    cw_setup="CW = "+str(CW)+"$\mu$m ({:.3f}".format(lowlim)+" - {:.3f}".format(uplim)+")"+"; N3.75, G200"
+else:
+    cw_setup="CW = "+str(CW)+"$\mu$m ({:.3f}".format(lowlim)+" - {:.3f}".format(uplim)+")"+"; N3.75, G210"
+    
 plt.annotate(cw_setup,xy=(lowlim+.002,1.15),xytext=(lowlim+.002,1.15),fontsize=10)
 
 plt.legend(loc=1,fontsize=10,ncol=2,columnspacing=.5,markerscale=0.28,framealpha=0)
