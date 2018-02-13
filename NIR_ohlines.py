@@ -7,10 +7,6 @@ warnings.filterwarnings('ignore')
 
 ##### Begin: User input #####
 
-CW=input("Enter central wavelength in um [default: 2.1]: ") or float(2.1); CW=float(CW)    # Central Wavelengt in micron
-
-z=input("Enter target redshift [default: 2.2]: ") or float(2.2); z=float(z)      # Object redshift
-
 # Emission line to indicate
 em_line=pd.DataFrame({'line': [r'$H_{\alpha}$', r'$H_{\beta}$', r'$H_{\gamma}$', r'$H_{\delta}$', r'OII', r'OIII', r'NII', r'NII', r'$Ly_{\alpha}$', r'$Ly_{\beta}$', r'C${\ IV}$', r'$Mg{\ II}$'],
                       'wavelength': [6562.8433, 4861.2786, 4340.462, 4101.74, 3727., 5007., 6549.8, 6585.3,1215.67,1025.72,1549.06,2798.75] })
@@ -21,7 +17,36 @@ em_line=pd.DataFrame({'line': [r'$H_{\alpha}$', r'$H_{\beta}$', r'$H_{\gamma}$',
 #skylines_file = input("Enter sky emission lines file [default: rousselot2000.txt] : ") or str("rousselot2000.txt")
 tellurics_file = "atran0.85-2.4.dat"
 skylines_file = "rousselot2000.txt"
-template_in=input("Enter choice a (A3, F3, G2, K3, QSO) of reference template (lgg=3.4, Fe/H=0.0) spectrum [default: G2]: ") or str("G2")
+
+##### End: User input #####
+parser = argparse.ArgumentParser()
+
+def evalcmlarg(text):
+    return eval(text)
+
+dw=0.155    # Full wavelength range at 2.4um. It will be rescaled below depending on CW
+
+parser.add_argument("--dw",type=evalcmlarg, help='Provide a wavelength range or multiplte of the default 0.155 um')
+parser.add_argument("--CW",type=float, help='Provide central wavelength in um [default: 2.1 um]')
+parser.add_argument("--z",type=float, help='Provide target redshift [default: 2.2]')
+parser.add_argument("--T",type=str, help='Provide choice a (A3, F3, G2, K3, QSO) of reference template (lgg=3.4, Fe/H=0.0) spectrum [default: G2]')
+newinput=parser.parse_args()
+if newinput.CW :
+    CW=newinput.CW
+else:
+    CW=input("Enter central wavelength in um [default: 2.1 um]: ") or float(2.1); CW=float(CW)    # Central Wavelengt in micron
+if newinput.dw :
+    dw=newinput.dw
+else:
+    dw=dw*(CW/2.4)
+if newinput.z :
+    z=newinput.z
+else:
+    z=input("Enter target redshift [default: 2.2]: ") or float(2.2); z=float(z)      # Object redshift
+if newinput.z :
+    template_in=newinput.T
+else:
+    template_in=input("Enter choice a (A3, F3, G2, K3, QSO) of reference template (lgg=3.4, Fe/H=0.0) spectrum [default: G2]: ") or str("G2")
 if str(template_in) != 'QSO':
     template_file="NLTE_mod/"+str(template_in)+"_L.gz"
 else:
@@ -30,20 +55,6 @@ else:
 indicate_lines=0
 if indicate_lines==1:
     template_line_file="NLTE_mod/"+str(template_in)+"_use_lines"
-
-##### End: User input #####
-
-dw=0.155    # Full wavelength range at 2.4um. It will be rescaled below depending on CW
-dw=dw*(CW/2.4)
-parser = argparse.ArgumentParser()
-
-def evalcmlarg(text):
-    return eval(text)
-
-parser.add_argument("--dw",type=evalcmlarg)
-input=parser.parse_args()
-if input.dw :
-    dw=input.dw
 
 # Read the data files
 tellurics = pd.read_table(tellurics_file, delim_whitespace=True, engine='c', 
@@ -135,7 +146,7 @@ plt.vlines(x_em_line,0,1.05, color='black', linestyle='--', linewidth=1.05, alph
 for em_line_loc, em_line_lable in zip(x_em_line,y_em_line):
     plt.annotate(em_line_lable,xy=(em_line_loc,1.05),xytext=(.999*em_line_loc,1.06))
 
-if input.dw :
+if newinput.dw :
     cw_setup="CW = "+str(CW)+"$\mu$m ({:.3f}".format(lowlim)+" - {:.3f}".format(uplim)+")"+"; N3.75, G200"
 else:
     cw_setup="CW = "+str(CW)+"$\mu$m ({:.3f}".format(lowlim)+" - {:.3f}".format(uplim)+")"+"; N3.75, G210"
