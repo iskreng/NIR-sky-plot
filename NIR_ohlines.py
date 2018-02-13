@@ -30,6 +30,7 @@ parser.add_argument("--dw",type=evalcmlarg, help='Provide a wavelength range or 
 parser.add_argument("--CW",type=float, help='Provide central wavelength in um [default: 2.1 um]')
 parser.add_argument("--z",type=float, help='Provide target redshift [default: 2.2]')
 parser.add_argument("--T",type=str, help='Provide choice a (A3, F3, G2, K3, QSO) of reference template (lgg=3.4, Fe/H=0.0) spectrum [default: G2]')
+parser.add_argument("--L",type=float, help='Provide a line of your choice to be marked [in um], e.g. 2.12 for H2')
 newinput=parser.parse_args()
 if newinput.CW :
     CW=newinput.CW
@@ -51,6 +52,8 @@ if str(template_in) != 'QSO':
     template_file="NLTE_mod/"+str(template_in)+"_L.gz"
 else:
     template_file="Selsing2015.dat.gz"
+if newinput.L:
+    user_line=(1+z)*newinput.L
 
 indicate_lines=0
 if indicate_lines==1:
@@ -150,6 +153,10 @@ if newinput.dw :
     cw_setup="CW = "+str(CW)+"$\mu$m ({:.3f}".format(lowlim)+" - {:.3f}".format(uplim)+")"+"; N3.75, G200"
 else:
     cw_setup="CW = "+str(CW)+"$\mu$m ({:.3f}".format(lowlim)+" - {:.3f}".format(uplim)+")"+"; N3.75, G210"
+
+# Indicate user line of choice
+if newinput.L:
+    plt.vlines(user_line,0,1.05, color='red', linestyle='--', linewidth=1.1, alpha=1,zorder=5, label="")
     
 plt.annotate(cw_setup,xy=(lowlim+.002,1.15),xytext=(lowlim+.002,1.15),fontsize=10)
 
