@@ -13,30 +13,29 @@ em_line=pd.DataFrame({'line': [r'$H_{\alpha}$', r'$H_{\beta}$', r'$H_{\gamma}$',
                       'wavelength': [6562.8433, 4861.2786, 4340.462, 4101.74, 3727., 5007., 6549.8, 6585.3,1215.67,1025.72,1549.06,2798.75] })
 
 # Set the files
-# Prompt for new files if they need to be different ones
-#tellurics_file = input("Enter telluric line file [default: atran0.85-2.4.dat] : ") or str("atran0.85-2.4.dat")
-#skylines_file = input("Enter sky emission lines file [default: rousselot2000.txt] : ") or str("rousselot2000.txt")
 tellurics_file = "atran0.85-2.4.dat"
 skylines_file = "rousselot2000.txt"
 
 ##### End: User input #####
+
 parser = argparse.ArgumentParser()
 
 def evalcmlarg(text):
     return eval(text)
 
-dw=0.155    # Full wavelength range at 2.4um. It will be rescaled below depending on CW
+#dw=0.155    # Full wavelength range at 2.4um. It will be rescaled below depending on CW
 
-parser.add_argument("--CW",type=float, help='[Default: 2.1] Central wavelength of the observation in um .....')
-parser.add_argument("--z",type=float, help='[Default: 2.2] Target redshift .................................')
-parser.add_argument("--T",type=str, help='[Default: G2 ] A G2 spectrum reference template to plot ........\
+parser.add_argument("--CW", metavar='2.1', type=float, help='[Default: 2.1] Central wavelength of the observation in um .....')
+parser.add_argument("--z", metavar='2.2', type=float, help='[Default: 2.2] Target redshift .................................')
+parser.add_argument("--T", metavar='G2', type=str, help='[Default: G2 ] A G2 spectrum reference template to plot ........\
                                           Stellar models: A3, F3, G2, K3 (lgg=3.4, Fe/H=0.0, nlte.mpia.de) \
                                           Galaxy type: Ell2, Ell5, Ell13, S0, Sa, Sb, Sc, Sd, Sdm, Spi4 ..\
                                           Starbursts: M82, N6090, N6240, Arp220, (IRAS:) I20551, I22491 ..\
                                           Seyfert: Mrk231, I19254, Sey18, Sey2 ...........................\
                                           QSOs: QSO, QSO1, TQSO1, QSO2, BQSO1, QSO2_Torus ................')
-parser.add_argument("--L",type=float, help='[Optional] A line of your choice to be marked [in um], e.g. 2.12 for H2')
-parser.add_argument("--dW",type=evalcmlarg, help='[Optional] Wavelength range or multiplte of the default 0.155 um in the K-band')
+parser.add_argument("--L", metavar='0.4570', type=float, help='[Optional] A line of your choice to be marked [in um], e.g. 0.4570 for FeII')
+parser.add_argument("--dW", metavar='0.155', type=evalcmlarg, default=0.155, help='[Optional] Wavelength range or \
+                                          multiplte (e.g. 3*dw) of the default 0.155 um in the K-band for the LUCI''s G210 gratung.')
 newinput=parser.parse_args()
 if newinput.CW :
     CW=newinput.CW
