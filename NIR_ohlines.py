@@ -131,24 +131,14 @@ if indicate_lines==1:
 symax=SY.max()
 tsymax=TSY.max()
 
-plt.plot(TX,TY, color='lightgray', linestyle='-', 
-         label='Telluric model, R=10 000', linewidth=0.75, alpha=1)
+# Plot 
+plt.plot(TX,TY, color='lightgray', linestyle='-', label='Telluric model, R=10 000 (ATRAN, Lord\'92)', linewidth=0.75, alpha=1)
 if str(template_in) in 'A3 F3 G2 K3':
-    plt.plot(TSX*(1+z)*1e-4,.5*TSY/tsymax, color='magenta', linestyle='-', label=template_in+', R=10 000 NLTE model', linewidth=0.75, alpha=1)
+    plt.plot(TSX*(1+z)*1e-4,.5*TSY/tsymax, color='magenta', linestyle='-', label=template_in+', R=10 000 NLTE model (nlte.mpia.de)', linewidth=0.75, alpha=1)
 elif str(template_in)=='QSO':
     plt.plot(TSX*(1+z)*1e-4,.5*TSY/tsymax, color='magenta', linestyle='-', label=template_in+', Selsing 2015 templ', linewidth=0.75, alpha=1)
 else:
-    plt.plot(TSX*(1+z)*1e-4,.5*TSY/tsymax, color='magenta', linestyle='-', label=template_in+', Low-res swire templ', linewidth=0.75, alpha=1)
-
-plt.vlines(SX*1e-4,0,SY/symax, color='red', linestyle='-', linewidth=0.5, label='Sky emission lines', alpha=1,zorder=4)
-
-# Label the sky emission lines
-for k, y_val in zip(SX, SY):
-    lab='{:.2f}'.format(k) #;print(lab)
-    # y_val=float(skylines['s_flx'][(skylines['s_lam']==k)])
-    if y_val/symax >= .19 :
-        plt.annotate(lab,xy=(k*1e-4,y_val/symax),xytext=(.998*k*1e-4,y_val/symax),
-                     fontsize=9)
+    plt.plot(TSX*(1+z)*1e-4,.5*TSY/tsymax, color='magenta', linestyle='-', label=template_in+', Low-res SWIRE templates (Polletta+\'07)', linewidth=0.75, alpha=1)
 
 # Label the strongest model lines 
 if indicate_lines==1:
@@ -158,36 +148,44 @@ if indicate_lines==1:
         m_line_loc=1e-4*(1+z)*(m_line_loc-6.); print(6+m_line_loc/(1e-4*(1+z)), m_line_loc,m_line_lable)
         plt.annotate(m_line_lable,xy=(m_line_loc,0.55),xytext=(.9995*m_line_loc,0.56),fontsize=8)
 
-#m_line_loc=2.082; m_line_lable="test"
-#plt.vlines(m_line_loc,0,.54, color='black', linestyle='--', linewidth=1.05)
-#plt.annotate(m_line_lable,xy=(m_line_loc,0.55),xytext=(.9995*m_line_loc,0.56),fontsize=8)
+# Plot sky emission lines
+plt.vlines(SX*1e-4,0,SY/symax, color='red', linestyle='-', linewidth=0.5, label='Sky emission lines (Rousselot\'00)', alpha=1,zorder=4)
+
+# Label the sky emission lines
+for k, y_val in zip(SX, SY):
+    lab='{:.2f}'.format(k) #;print(lab)
+    # y_val=float(skylines['s_flx'][(skylines['s_lam']==k)])
+    if y_val/symax >= .19 :
+        plt.annotate(lab,xy=(k*1e-4,y_val/symax),xytext=(.998*k*1e-4,y_val/symax),
+                     fontsize=9)
 
 # Indicate the location of the emission line
 x_em_line=(1+z)*1e-4*em_line['wavelength'][((1+z)*em_line['wavelength']>=lowlim*1e4) & ((1+z)*em_line['wavelength']<=uplim*1e4)]
 y_em_line=em_line['line'][((1+z)*em_line['wavelength']>=lowlim*1e4) & ((1+z)*em_line['wavelength']<=uplim*1e4)]
-plt.vlines(x_em_line,0,1.05, color='black', linestyle='--', linewidth=1.05, alpha=1,zorder=5, label="Emission lines")
+plt.vlines(x_em_line,0,1.03, color='black', linestyle='--', linewidth=1.05, alpha=1,zorder=5, label="Selected emission lines")
 for em_line_loc, em_line_lable in zip(x_em_line,y_em_line):
-    plt.annotate(em_line_lable,xy=(em_line_loc,1.05),xytext=(.999*em_line_loc,1.06))
+    plt.annotate(em_line_lable,xy=(em_line_loc,1.03),xytext=(.999*em_line_loc,1.04))
 
 if newinput.dW :
     cw_setup="CW = "+str(CW)+"$\mu$m ({:.3f}".format(lowlim)+" - {:.3f}".format(uplim)+")"+"; N3.75, G200"
 else:
     cw_setup="CW = "+str(CW)+"$\mu$m ({:.3f}".format(lowlim)+" - {:.3f}".format(uplim)+")"+"; N3.75, G210"
 
-# Indicate user line of choice
-if newinput.L:
-    plt.vlines(user_line,0,1.05, color='red', linestyle='--', linewidth=1.1, alpha=1,zorder=5, label="")
-    
-plt.annotate(cw_setup,xy=(lowlim+.002,1.15),xytext=(lowlim+.002,1.15),fontsize=10)
-
-plt.legend(loc=1,fontsize=10,ncol=2,columnspacing=.5,markerscale=0.28,framealpha=0)
-
-plt.tight_layout()
-
 print("\nFew emission lines for z= "+str(z)+" :")
 shifted=em_line['wavelength'] * (1+z)*1e-4
 em_line.insert(2,'z-shifted',shifted)
 print(em_line)
+plt.annotate(cw_setup,xy=(lowlim+.002,1.15),xytext=(lowlim+.002,1.15),fontsize=10)
+
+# Indicate user line of choice
+if newinput.L:
+    plt.vlines(user_line,0,1.05, color='blue', linestyle='--', linewidth=1.3, alpha=1,zorder=5, label='') #"Your line {:}".format(newinput.L)+'$\mu$m')
+    plt.annotate('Line {:}'.format(newinput.L)+' z-shifted to {:}'.format(user_line),xy=(user_line,1.03),xytext=(user_line*.995,1.04),fontsize=10)
+    print('\nYour input line: {:}'.format(newinput.L)+' restframe is redshifted to: {:}'.format(user_line))
+    
+plt.legend(loc=1,fontsize=10,ncol=2,columnspacing=.5,markerscale=0.28,framealpha=0)
+
+plt.tight_layout()
 
 plt.savefig('NIR_ohlines.png', bbox_inches='tight')
 plt.show()
