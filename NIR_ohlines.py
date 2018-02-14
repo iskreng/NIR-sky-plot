@@ -23,7 +23,7 @@ parser = argparse.ArgumentParser()
 def evalcmlarg(text):
     return eval(text)
 
-#dw=0.155    # Full wavelength range at 2.4um. It will be rescaled below depending on CW
+dW=0.155    # Full wavelength range at 2.4um. It will be rescaled below depending on CW
 
 parser.add_argument("--CW", metavar='2.1', type=float, help='[Default: 2.1] Central wavelength of the observation in um .....')
 parser.add_argument("--z", metavar='2.2', type=float, help='[Default: 2.2] Target redshift .................................')
@@ -33,18 +33,18 @@ parser.add_argument("--T", metavar='G2', type=str, help='[Default: G2 ] A G2 spe
                                           Starbursts: M82, N6090, N6240, Arp220, (IRAS:) I20551, I22491 ..\
                                           Seyfert: Mrk231, I19254, Sey18, Sey2 ...........................\
                                           QSOs: QSO, QSO1, TQSO1, QSO2, BQSO1, QSO2_Torus ................')
-parser.add_argument("--L", metavar='0.4570', type=float, help='[Optional] A line of your choice to be marked [in um], e.g. 0.4570 for FeII')
+parser.add_argument("--L", metavar='0.5317', type=float, help='[Optional] A line of your choice to be marked [in um], e.g. 0.4570 for FeII')
 parser.add_argument("--dW", metavar='0.155', type=evalcmlarg, default=0.155, help='[Optional] Wavelength range or \
-                                          multiplte (e.g. 3*dw) of the default 0.155 um in the K-band for the LUCI''s G210 gratung.')
+                                          multiplte (e.g. 3*dW) of the default 0.155 um in the K-band for the LUCI''s G210 gratung.')
 newinput=parser.parse_args()
 if newinput.CW :
     CW=newinput.CW
 else:
     CW=input("Enter central wavelength in um [default: 2.1 um]: ") or float(2.1); CW=float(CW)    # Central Wavelengt in micron
 if newinput.dW :
-    dw=newinput.dW
+    dW=newinput.dW
 else:
-    dw=dw*(CW/2.4)
+    dW=dW*(CW/2.4)
 if newinput.z :
     z=newinput.z
 else:
@@ -92,8 +92,8 @@ if indicate_lines==1:
     template_lines = pd.read_table(template_line_file, delim_whitespace=True, engine='c', 
                               header=None, skiprows=1, names=['tspline_lam','tspline_ID','tspline_lgg','tspline_Elow','tspline_linstr'], usecols=[0,1,2,3,4])
 
-lowlim=CW-dw/2.     #calclate lower limit
-uplim=CW+dw/2.      #calclate upper limit
+lowlim=CW-dW/2.     #calclate lower limit
+uplim=CW+dW/2.      #calclate upper limit
 
 # Format the plot
 plt.style.use('classic')
