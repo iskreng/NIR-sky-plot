@@ -27,7 +27,6 @@ def evalcmlarg(text):
 
 dw=0.155    # Full wavelength range at 2.4um. It will be rescaled below depending on CW
 
-parser.add_argument("--dW",type=evalcmlarg, help='[Optional] Wavelength range or multiplte of the default 0.155 um in the K-band')
 parser.add_argument("--CW",type=float, help='[Default: 2.1] Central wavelength of the observation in um .....')
 parser.add_argument("--z",type=float, help='[Default: 2.2] Target redshift .................................')
 parser.add_argument("--T",type=str, help='[Default: G2 ] A G2 spectrum reference template to plot ........\
@@ -37,6 +36,7 @@ parser.add_argument("--T",type=str, help='[Default: G2 ] A G2 spectrum reference
                                           Seyfert: Mrk231, I19254, Sey18, Sey2 ...........................\
                                           QSOs: QSO, QSO1, TQSO1, QSO2, BQSO1, QSO2_Torus ................')
 parser.add_argument("--L",type=float, help='[Optional] A line of your choice to be marked [in um], e.g. 2.12 for H2')
+parser.add_argument("--dW",type=evalcmlarg, help='[Optional] Wavelength range or multiplte of the default 0.155 um in the K-band')
 newinput=parser.parse_args()
 if newinput.CW :
     CW=newinput.CW
