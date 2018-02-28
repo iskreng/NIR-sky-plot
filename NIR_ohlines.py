@@ -13,7 +13,7 @@ em_line=pd.DataFrame({'line': [r'$H_{\alpha}$', r'$H_{\beta}$', r'$H_{\gamma}$',
                       'wavelength': [6562.8433, 4861.2786, 4340.462, 4101.74, 3727., 5007., 6549.8, 6585.3,1215.67,1025.72,1549.06,2798.75] })
 
 # Set the files
-tellurics_file = "atran0.85-2.4.dat"
+tellurics_file = "atran0.85-2.4.dat.gz"
 skylines_file = "rousselot2000.txt"
 
 ##### End: User input #####
@@ -27,20 +27,20 @@ dW=0.155    # Full wavelength range at 2.4um. It will be rescaled below dependin
 
 parser.add_argument("--CW", metavar='2.1', type=float, help='[Default: 2.1] Central wavelength of the observation in um .....')
 parser.add_argument("--z", metavar='2.2', type=float, help='[Default: 2.2] Target redshift .................................')
-parser.add_argument("--T", metavar='G2', type=str, help='[Default: G2 ] A G2 spectrum reference template to plot ........\
+parser.add_argument("--T", metavar='G2', type=str, help='[Default: G2 ] A spectrum reference template to plot ...........\
                                           Stellar models: A3, F3, G2, K3 (lgg=3.4, Fe/H=0.0, nlte.mpia.de) \
                                           Galaxy type: Ell2, Ell5, Ell13, S0, Sa, Sb, Sc, Sd, Sdm, Spi4 ..\
                                           Starbursts: M82, N6090, N6240, Arp220, (IRAS:) I20551, I22491 ..\
                                           Seyfert: Mrk231, I19254, Sey18, Sey2 ...........................\
                                           QSOs: QSO, QSO1, TQSO1, QSO2, BQSO1, QSO2_Torus ................')
-parser.add_argument("--L", metavar='0.5317', type=float, help='[Optional] A line of your choice to be marked [in um], e.g. 0.4570 for FeII')
+parser.add_argument("--L", metavar='0.5317', type=float, help='[Optional] A (restframe) line of your choice to be marked [in um], e.g. 0.4570 for FeII')
 parser.add_argument("--dW", metavar='0.155', type=evalcmlarg, default=0.155, help='[Optional] Wavelength range or \
-                                          multiplte (e.g. 3*dW) of the default 0.155 um in the K-band for the LUCI''s G210 gratung.')
+                                          multiplte (e.g. 3*dW) of the default 0.155 um (or the LUCI''s G210 grating in K-band.')
 newinput=parser.parse_args()
 if newinput.CW :
     CW=newinput.CW
 else:
-    CW=input("Enter central wavelength in um [default: 2.1 um]: ") or float(2.1); CW=float(CW)    # Central Wavelengt in micron
+    CW=input("Enter central wavelength of observation in um [default: 2.1 um]: ") or float(2.1); CW=float(CW)    # Central Wavelengt in micron
 if newinput.dW :
     dW=newinput.dW
 else:
@@ -170,7 +170,7 @@ if newinput.dW :
 else:
     cw_setup="CW = "+str(CW)+"$\mu$m ({:.3f}".format(lowlim)+" - {:.3f}".format(uplim)+")"+"; N3.75, G210"
 
-print("\nFew emission lines for z= "+str(z)+" :")
+print("\nFew emission lines for z= "+str(z)+" (rest frame and z-shifted) :")
 shifted=em_line['wavelength'] * (1+z)*1e-4
 em_line.insert(2,'z-shifted',shifted)
 print(em_line)
@@ -179,8 +179,8 @@ plt.annotate(cw_setup,xy=(lowlim+.002,1.15),xytext=(lowlim+.002,1.15),fontsize=1
 # Indicate user line of choice
 if newinput.L:
     plt.vlines(user_line,0,1.05, color='blue', linestyle='--', linewidth=1.3, alpha=1,zorder=5, label='') #"Your line {:}".format(newinput.L)+'$\mu$m')
-    plt.annotate('Line {:}'.format(newinput.L)+' z-shifted to {:}'.format(user_line),xy=(user_line,1.03),xytext=(user_line*.995,1.04),fontsize=10)
-    print('\nYour input line: {:}'.format(newinput.L)+' restframe is redshifted to: {:}'.format(user_line))
+    plt.annotate('User rest frame line {:}'.format(newinput.L)+' z-shifted to {:}'.format(user_line),xy=(user_line,1.03),xytext=(user_line*.995,1.04),fontsize=10)
+    print('\nInput line: {:}'.format(newinput.L)+' rest frame is redshifted to: {:}'.format(user_line))
     
 plt.legend(loc=1,fontsize=10,ncol=2,columnspacing=.5,markerscale=0.28,framealpha=0)
 
